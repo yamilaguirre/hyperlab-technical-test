@@ -28,6 +28,10 @@ Route::prefix('onboarding')->name('onboarding.')->group(function () {
             7 => 'Onboarding/Step07Categories',
             8 => 'Onboarding/Step08Gender',
             9 => 'Onboarding/Step09SocialMedia',
+            10 => 'Onboarding/Step10PhotoPerfil',
+            11 => 'Onboarding/Step11Description',
+            12 => 'Onboarding/Step12Country',
+            13 => 'Onboarding/Step13Username',
         ];
 
         if (!array_key_exists($step, $steps)) {

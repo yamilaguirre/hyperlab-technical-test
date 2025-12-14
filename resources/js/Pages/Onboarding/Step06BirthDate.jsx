@@ -1,9 +1,11 @@
 import React from "react";
 import { Head, router } from "@inertiajs/react";
 import OnboardingLayout from "@/Layouts/OnboardingLayout";
-import PrimaryButton from "@/Components/UI/PrimaryButton";
 import { useOnboarding } from "@/Contexts/OnboardingContext";
 import useTranslation from "@/Hooks/useTranslation";
+import StepActions from "@/Components/Onboarding/StepActions";
+import StepDescription from "@/Components/Onboarding/StepDescription";
+import DateInput from "@/Components/Onboarding/DateInput";
 
 export default function Step06BirthDate() {
     const { formData, updateFormData, nextStep } = useOnboarding();
@@ -43,40 +45,39 @@ export default function Step06BirthDate() {
     };
 
     return (
-        <OnboardingLayout title={t("Birth Date")}>
+        <OnboardingLayout title={t("¿Cuál es tu fecha de nacimiento?")}>
             <Head title={t("Birth Date")} />
 
             <form
                 onSubmit={handleNext}
                 className="flex flex-col h-full mt-10 w-full"
             >
-                <p className="text-white/80 text-sm mb-4">
-                    {t("Select your birth date")}
-                </p>
-                <input
-                    type="date"
+                <DateInput
                     value={formData.birthDate || ""}
                     onChange={(e) =>
                         updateFormData({ birthDate: e.target.value })
                     }
                     max={getMaxDate()}
-                    className="w-full bg-dark-input text-white border-transparent rounded-lg py-4 px-4 focus:ring-primary focus:border-primary"
                     required
                 />
 
-                <p
-                    className={`mt-6 text-sm leading-relaxed px-1 ${
+                <StepDescription className="mt-6 leading-relaxed px-1 text-white/80 text-sm">
+                    {t("Colaboramos con National Center for Missing & Exploited Children y las autoridades para la prevención de abuso y explotación de menores de edad.")}
+                </StepDescription>
+
+                <StepDescription
+                    className={`mt-4 leading-relaxed px-1 ${
                         isAdult ? "text-green-500" : "text-red-500"
                     }`}
                 >
                     {t("You must be 18 or older to use the platform")}
-                </p>
+                </StepDescription>
 
-                <div className="mt-auto pt-12 pb-8 w-full">
-                    <PrimaryButton type="submit" disabled={!isAdult}>
-                        {t("Next")}
-                    </PrimaryButton>
-                </div>
+                <StepActions
+                    onNext={handleNext}
+                    disabled={!isAdult}
+                    useFormSubmit={true}
+                />
             </form>
         </OnboardingLayout>
     );

@@ -1,10 +1,11 @@
 import React from "react";
 import { Head, router } from "@inertiajs/react";
 import OnboardingLayout from "@/Layouts/OnboardingLayout";
-import PrimaryButton from "@/Components/UI/PrimaryButton";
 import TextInput from "@/Components/UI/TextInput";
 import { useOnboarding } from "@/Contexts/OnboardingContext";
 import useTranslation from "@/Hooks/useTranslation";
+import StepActions from "@/Components/Onboarding/StepActions";
+import StepDescription from "@/Components/Onboarding/StepDescription";
 import {
     FaInstagram,
     FaTiktok,
@@ -68,12 +69,12 @@ export default function Step09SocialMedia() {
     };
 
     return (
-        <OnboardingLayout title={t("Social Media")}>
-            <Head title={t("Social Media")} />
+        <OnboardingLayout title={t("Ingresa tus redes sociales")}>
+            <Head title={t("Ingresa tus redes sociales")} />
 
-            <p className="text-white/80 text-sm mb-6">
+            <StepDescription>
                 {t("Add your social media profiles (optional)")}
-            </p>
+            </StepDescription>
 
             <form onSubmit={handleNext} className="flex flex-col h-full w-full">
                 <div className="space-y-4 flex-grow overflow-y-auto">
@@ -98,16 +99,12 @@ export default function Step09SocialMedia() {
                     ))}
                 </div>
 
-                <div className="mt-auto pt-12 pb-8 w-full">
-                    <button
-                        type="button"
-                        onClick={handleNext}
-                        className="text-white/60 hover:text-white text-sm mb-4 transition-colors mx-auto block"
-                    >
-                        {t("Skip this step")}
-                    </button>
-                    <PrimaryButton type="submit">{t("Next")}</PrimaryButton>
-                </div>
+                <StepActions
+                    onNext={handleNext}
+                    onSkip={handleNext}
+                    showSkip={true}
+                    useFormSubmit={true}
+                />
             </form>
         </OnboardingLayout>
     );

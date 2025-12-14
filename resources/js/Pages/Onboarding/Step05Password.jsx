@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Head, router } from "@inertiajs/react";
 import OnboardingLayout from "@/Layouts/OnboardingLayout";
-import PrimaryButton from "@/Components/UI/PrimaryButton";
 import TextInput from "@/Components/UI/TextInput";
 import { useOnboarding } from "@/Contexts/OnboardingContext";
 import useTranslation from "@/Hooks/useTranslation";
+import StepActions from "@/Components/Onboarding/StepActions";
+import ValidationList from "@/Components/Onboarding/ValidationList";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 export default function Step05Password() {
     const { formData, updateFormData, nextStep } = useOnboarding();
     const { t } = useTranslation();
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => updateFormData({ password: e.target.value });
 
@@ -26,63 +29,56 @@ export default function Step05Password() {
         /[0-9]/.test(formData.password);
 
     return (
-        <OnboardingLayout title={t("Password")}>
-            <Head title={t("Password")} />
+        <OnboardingLayout title={t("Crea tu contraseña")}>
+            <Head title={t("Crea tu contraseña")} />
 
             <form onSubmit={handleNext} className="flex flex-col h-full mt-6">
-                <TextInput
-                    type="password"
-                    placeholder={t("Minimum 8 characters")}
-                    value={formData.password}
-                    onChange={handleChange}
-                    autoFocus
-                    required
+                <div className="relative">
+                    <TextInput
+                        type={showPassword ? "text" : "password"}
+                        placeholder={t("Minimum 8 characters")}
+                        value={formData.password}
+                        onChange={handleChange}
+                        autoFocus
+                        required
+                        className="pr-12"
+                    />
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white transition-colors"
+                    >
+                        {showPassword ? (
+                            <FaEyeSlash className="text-xl" />
+                        ) : (
+                            <FaEye className="text-xl" />
+                        )}
+                    </button>
+                </div>
+
+                <ValidationList
+                    validations={[
+                        {
+                            isValid: formData.password.length >= 8,
+                            label: t("Minimum 8 characters"),
+                        },
+                        {
+                            isValid: /[A-Z]/.test(formData.password),
+                            label: t("At least one uppercase letter"),
+                        },
+                        {
+                            isValid: /[0-9]/.test(formData.password),
+                            label: t("At least one number"),
+                        },
+                    ]}
                 />
 
-                <ul className="mt-6 space-y-2 text-sm text-text-muted">
-                    <li className="flex items-center gap-2">
-                        <span
-                            className={
-                                formData.password.length >= 8
-                                    ? "text-green-500"
-                                    : "text-gray-600"
-                            }
-                        >
-                            ●
-                        </span>
-                        {t("Minimum 8 characters")}
-                    </li>
-                    <li className="flex items-center gap-2">
-                        <span
-                            className={
-                                /[A-Z]/.test(formData.password)
-                                    ? "text-green-500"
-                                    : "text-gray-600"
-                            }
-                        >
-                            ●
-                        </span>
-                        {t("At least one uppercase letter")}
-                    </li>
-                    <li className="flex items-center gap-2">
-                        <span
-                            className={
-                                /[0-9]/.test(formData.password)
-                                    ? "text-green-500"
-                                    : "text-gray-600"
-                            }
-                        >
-                            ●
-                        </span>
-                        {t("At least one number")}
-                    </li>
-                </ul>
-
-                <div className="mt-auto pt-8">
-                    <PrimaryButton type="submit" disabled={!isPasswordValid}>
-                        {t("Next")}
-                    </PrimaryButton>
-                </div>
+                <StepActions
+                    onNext={handleNext}
+                    disabled={!isPasswordValid}
+                    className="pt-8"
+                    useFormSubmit={true}
+                />
             </form>
         </OnboardingLayout>
     );

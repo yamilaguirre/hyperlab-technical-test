@@ -1,10 +1,11 @@
 import React from "react";
 import { Head, router } from "@inertiajs/react";
 import OnboardingLayout from "@/Layouts/OnboardingLayout";
-import PrimaryButton from "@/Components/UI/PrimaryButton";
 import TextInput from "@/Components/UI/TextInput";
 import { useOnboarding } from "@/Contexts/OnboardingContext";
 import useTranslation from "@/Hooks/useTranslation";
+import StepActions from "@/Components/Onboarding/StepActions";
+import StepDescription from "@/Components/Onboarding/StepDescription";
 
 export default function Step03FullName() {
     const { formData, updateFormData, nextStep } = useOnboarding();
@@ -19,8 +20,8 @@ export default function Step03FullName() {
     };
 
     return (
-        <OnboardingLayout title={t("Write your Full Name")}>
-            <Head title={t("Full Name")} />
+        <OnboardingLayout title={t("Escribe tu nombre completo")}>
+            <Head title={t("Escribe tu nombre completo")} />
 
             <form
                 onSubmit={handleNext}
@@ -37,15 +38,15 @@ export default function Step03FullName() {
                     autoFocus
                 />
 
-                <p className="mt-6 text-white/80 text-sm leading-relaxed px-1">
+                <StepDescription className="mt-6 leading-relaxed px-1">
                     {t("Must match ID")}
-                </p>
+                </StepDescription>
 
-                <div className="mt-auto pt-12 pb-8 w-full">
-                    <PrimaryButton type="submit" disabled={!formData.fullName}>
-                        {t("Next")}
-                    </PrimaryButton>
-                </div>
+                <StepActions
+                    onNext={handleNext}
+                    disabled={!formData.fullName}
+                    useFormSubmit={true}
+                />
             </form>
         </OnboardingLayout>
     );

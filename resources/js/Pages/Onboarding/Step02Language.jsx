@@ -1,9 +1,11 @@
 import React from "react";
 import { Head, router } from "@inertiajs/react";
 import OnboardingLayout from "@/Layouts/OnboardingLayout";
-import PrimaryButton from "@/Components/UI/PrimaryButton";
 import { useOnboarding } from "@/Contexts/OnboardingContext";
 import useTranslation from "@/Hooks/useTranslation";
+import StepActions from "@/Components/Onboarding/StepActions";
+import StepDescription from "@/Components/Onboarding/StepDescription";
+import SelectInput from "@/Components/Onboarding/SelectInput";
 
 export default function Step02Language() {
     const { formData, updateFormData, nextStep } = useOnboarding();
@@ -42,38 +44,31 @@ export default function Step02Language() {
         }
     };
 
+    const languageOptions = languages.map((lang) => ({
+        value: lang,
+        label: lang,
+    }));
+
     return (
-        <OnboardingLayout title={t("Select Language")}>
-            <Head title={t("Select Language")} />
+        <OnboardingLayout title={t("Selecciona tu idioma")}>
+            <Head title={t("Selecciona tu idioma")} />
 
-            <p className="text-center text-white/90 mb-10 px-2 text-sm leading-relaxed">
+            <StepDescription variant="center" className="mb-10 px-2 leading-relaxed">
                 {t("Reach other markets")}
-            </p>
+            </StepDescription>
 
-            <div className="w-full">
-                <select
+            <div className="flex flex-col flex-grow w-full">
+                <SelectInput
                     value={formData.language}
                     onChange={(e) => handleLanguageChange(e.target.value)}
-                    className="w-full bg-dark-input text-white border-transparent rounded-lg py-4 px-4 focus:ring-primary focus:border-primary appearance-none"
-                >
-                    <option value="" disabled>
-                        {t("Select a language")}
-                    </option>
-                    {languages.map((lang) => (
-                        <option key={lang} value={lang}>
-                            {lang}
-                        </option>
-                    ))}
-                </select>
-            </div>
+                    options={languageOptions}
+                    placeholder={t("Select a language")}
+                />
 
-            <div className="mt-auto pt-12 pb-8 w-full">
-                <PrimaryButton
-                    onClick={handleNext}
+                <StepActions
+                    onNext={handleNext}
                     disabled={!formData.language}
-                >
-                    {t("Next")}
-                </PrimaryButton>
+                />
             </div>
         </OnboardingLayout>
     );

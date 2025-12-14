@@ -13,11 +13,7 @@ export default function Login() {
                 <Head title={t("Login")} />
 
                 <div className="flex-1 flex flex-col justify-center px-6 pt-20">
-                    <div className="flex justify-center mb-10">
-                        <div className="w-24 h-24 bg-transparent flex items-center justify-center">
-                            <span className="text-4xl text-white">✪</span>
-                        </div>
-                    </div>
+                    <div className="flex justify-center mb-10"></div>
 
                     <div className="flex justify-center items-center mb-8">
                         <LanguageSelector />

@@ -1,10 +1,11 @@
 import React from "react";
 import { Head, router } from "@inertiajs/react";
 import OnboardingLayout from "@/Layouts/OnboardingLayout";
-import PrimaryButton from "@/Components/UI/PrimaryButton";
 import TextInput from "@/Components/UI/TextInput";
 import { useOnboarding } from "@/Contexts/OnboardingContext";
 import useTranslation from "@/Hooks/useTranslation";
+import StepActions from "@/Components/Onboarding/StepActions";
+import Divider from "@/Components/Onboarding/Divider";
 
 export default function Step04Email() {
     const { formData, updateFormData, nextStep } = useOnboarding();
@@ -21,8 +22,8 @@ export default function Step04Email() {
     };
 
     return (
-        <OnboardingLayout title={t("Email")}>
-            <Head title={t("Email")} />
+        <OnboardingLayout title={t("Escribe tu correo electronico")}>
+            <Head title={t("Escribe tu correo electronico")} />
 
             <form onSubmit={handleNext} className="flex flex-col h-full mt-6">
                 <div className="space-y-4">
@@ -35,13 +36,7 @@ export default function Step04Email() {
                         required
                     />
 
-                    <div className="relative flex py-5 items-center">
-                        <div className="flex-grow border-t border-white/10"></div>
-                        <span className="flex-shrink-0 mx-4 text-gray-500 text-xs uppercase">
-                            {t("OR")}
-                        </span>
-                        <div className="flex-grow border-t border-white/10"></div>
-                    </div>
+                    <Divider />
 
                     <button
                         type="button"
@@ -51,11 +46,12 @@ export default function Step04Email() {
                     </button>
                 </div>
 
-                <div className="mt-auto pt-8">
-                    <PrimaryButton type="submit" disabled={!formData.email}>
-                        {t("Next")}
-                    </PrimaryButton>
-                </div>
+                <StepActions
+                    onNext={handleNext}
+                    disabled={!formData.email}
+                    className="pt-8"
+                    useFormSubmit={true}
+                />
             </form>
         </OnboardingLayout>
     );

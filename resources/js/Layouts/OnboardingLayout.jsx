@@ -1,9 +1,17 @@
 import React from "react";
+import { router } from "@inertiajs/react";
 import { useOnboarding } from "@/Contexts/OnboardingContext";
 import ProgressBar from "@/Components/Onboarding/ProgressBar";
 
 export default function OnboardingLayout({ children, title, showBack = true }) {
     const { prevStep, currentStep } = useOnboarding();
+
+    const handleBack = () => {
+        if (currentStep > 1) {
+            prevStep();
+            router.visit(route("onboarding.step", currentStep - 1));
+        }
+    };
 
     return (
         <div className="min-h-screen bg-dark-bg text-text-main flex flex-col items-center font-sans selection:bg-primary selection:text-white">
@@ -11,7 +19,7 @@ export default function OnboardingLayout({ children, title, showBack = true }) {
                 <header className="flex items-center gap-4 pt-2 mb-8">
                     {showBack && currentStep > 1 && (
                         <button
-                            onClick={prevStep}
+                            onClick={handleBack}
                             className="text-white p-2 -ml-2 hover:bg-white/10 rounded-full transition-colors"
                         >
                             <svg
