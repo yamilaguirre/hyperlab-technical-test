@@ -24,6 +24,7 @@ Route::prefix('onboarding')->name('onboarding.')->group(function () {
             3 => 'Onboarding/Step03FullName',
             4 => 'Onboarding/Step04Email',
             5 => 'Onboarding/Step05Password',
+            6 => 'Onboarding/Step06BirthDate',
         ];
 
         if (!array_key_exists($step, $steps)) {

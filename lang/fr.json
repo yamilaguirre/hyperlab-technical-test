@@ -26,5 +26,12 @@
     "Select a language": "Sélectionnez une langue",
     "Write your Full Name": "Écrivez votre nom complet",
     "Full Name Placeholder": "Nom complet",
-    "Must match ID": "*Doit correspondre exactement au nom qui apparaît sur votre ID ou passeport. Ce nom ne sera pas visible pour les utilisateurs."
+    "Must match ID": "*Doit correspondre exactement au nom qui apparaît sur votre ID ou passeport. Ce nom ne sera pas visible pour les utilisateurs.",
+    "Email Placeholder": "nom@exemple.com",
+    "Minimum 8 characters": "Minimum 8 caractères",
+    "At least one uppercase letter": "Au moins une lettre majuscule",
+    "At least one number": "Au moins un chiffre",
+    "Birth Date": "Date de naissance",
+    "Select your birth date": "Sélectionnez votre date de naissance",
+    "You must be 18 or older to use the platform": "Vous devez avoir 18 ans ou plus pour utiliser la plateforme"
 }
