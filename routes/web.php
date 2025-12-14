@@ -14,6 +14,10 @@ Route::get('/', function () {
     return Inertia::render('Auth/Login');
 })->name('login');
 
+Route::get('/home', function () {
+    return Inertia::render('Home');
+})->name('home');
+
 Route::prefix('onboarding')->name('onboarding.')->group(function () {
     
     Route::get('/step/{step}', function ($step) {
