@@ -12,15 +12,14 @@ import PostCard from "@/Components/Home/PostCard";
 export default function Home() {
     const [activeTab, setActiveTab] = useState("Explorer");
 
-    // Datos de ejemplo - en producción vendrían del backend
     const userData = {
         profileImage: "/storage/images/user-background.png",
-        name: "Mariano",
-        username: "@mariano12",
+        name: "Yamil Aguirre",
+        username: "@yamilaguirre",
         isVerified: true,
         likes: "1K",
         followers: "4K",
-        location: "Colombia",
+        location: "Bolivia",
     };
 
     const financialData = {
@@ -39,16 +38,15 @@ export default function Home() {
         {
             id: 1,
             profileImage: "/storage/images/user-background.png",
-            name: "Mariano",
-            username: "@mariano12",
+            name: "Yamil Aguirre",
+            username: "@yamilaguirre",
             isVerified: true,
             timeAgo: "1h",
-            postImage: "/storage/images/user-background.png", // Reemplazar con imagen real
+            postImage: "/storage/images/user-background.png", 
             likes: "1K",
             caption: "Ya escuchaste mi nuevo tema?",
             hashtags: ["abc", "abcd", "abcde"],
         },
-        // Agregar más posts aquí
     ];
 
     return (
@@ -59,7 +57,6 @@ export default function Home() {
         >
             <Head title="Home" />
 
-            {/* Profile Section */}
             <ProfileHeader
                 profileImage={userData.profileImage}
                 name={userData.name}
@@ -70,30 +67,24 @@ export default function Home() {
                 location={userData.location}
             />
 
-            {/* Financial Metrics */}
             <FinancialMetrics
                 netEarnings={financialData.netEarnings}
                 subscriptions={financialData.subscriptions}
                 tips={financialData.tips}
             />
 
-            {/* Time Breakdown */}
             <TimeBreakdown
                 today={timeData.today}
                 thisWeek={timeData.thisWeek}
                 thisMonth={timeData.thisMonth}
             />
 
-            {/* Earnings Chart */}
             <EarningsChart />
 
-            {/* Subscription Cost Button */}
             <SubscriptionCostButton />
 
-            {/* User Description */}
             <UserDescription description="" />
 
-            {/* Posts */}
             {posts.map((post) => (
                 <PostCard
                     key={post.id}

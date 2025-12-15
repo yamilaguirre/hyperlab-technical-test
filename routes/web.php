@@ -19,6 +19,8 @@ Route::get('/home', function () {
 })->name('home');
 
 Route::prefix('onboarding')->name('onboarding.')->group(function () {
+    Route::post('/complete', [App\Http\Controllers\OnboardingController::class, 'complete'])
+        ->name('complete');
     
     Route::get('/step/{step}', function ($step) {
         

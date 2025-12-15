@@ -1,5 +1,5 @@
-import React from "react";
-import { Head, router } from "@inertiajs/react";
+import React, { useState } from "react";
+import { Head, router, useForm } from "@inertiajs/react";
 import OnboardingLayout from "@/Layouts/OnboardingLayout";
 import TextInput from "@/Components/UI/TextInput";
 import { useOnboarding } from "@/Contexts/OnboardingContext";
@@ -10,6 +10,7 @@ import StepDescription from "@/Components/Onboarding/StepDescription";
 export default function Step13Username() {
     const { formData, updateFormData, nextStep } = useOnboarding();
     const { t } = useTranslation();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const MIN_LENGTH = 3;
     const MAX_LENGTH = 20;
@@ -24,11 +25,46 @@ export default function Step13Username() {
 
     const handleNext = (e) => {
         e.preventDefault();
-        if (isValid) {
-            nextStep();
-            // Aquí normalmente irías a completar el onboarding o al dashboard
-            // Por ahora, redirigimos al login
-            router.visit(route("login"));
+        if (isValid && !isSubmitting) {
+            setIsSubmitting(true);
+
+            // Preparar los datos para enviar al backend
+            const onboardingData = {
+                role: formData.role,
+                email: formData.email,
+                password: formData.password,
+                password_confirmation: formData.password, // Para validación
+                full_name: formData.fullName,
+                username: formData.username,
+                birth_date: formData.birthDate,
+                gender: formData.gender || null,
+                language: formData.language || null,
+                description: formData.description || null,
+                categories: formData.categories || [],
+                socials: formData.socials || {},
+                profile_photo:
+                    formData.profilePhotoPreview ||
+                    formData.profileImage ||
+                    null,
+                blocked_countries:
+                    formData.blockedCountries || formData.country
+                        ? [formData.country]
+                        : [],
+            };
+
+            // Enviar datos al backend
+            router.post(route("onboarding.complete"), onboardingData, {
+                onSuccess: () => {
+                    // El usuario será redirigido automáticamente al home
+                },
+                onError: (errors) => {
+                    setIsSubmitting(false);
+                    console.error("Error al completar onboarding:", errors);
+                },
+                onFinish: () => {
+                    setIsSubmitting(false);
+                },
+            });
         }
     };
 
@@ -80,8 +116,10 @@ export default function Step13Username() {
 
                 <StepActions
                     onNext={handleNext}
-                    disabled={!isValid}
-                    nextLabel={t("Complete")}
+                    disabled={!isValid || isSubmitting}
+                    nextLabel={
+                        isSubmitting ? t("Processing...") : t("Complete")
+                    }
                     useFormSubmit={true}
                 />
             </form>
